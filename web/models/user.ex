@@ -1,12 +1,13 @@
 defmodule Dwblog.User do
   use Dwblog.Web, :model
+  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
     field :username, :string
     field :email, :string
     field :password_digest, :string
 
-    timestamps
+    timestamps()
 
     # Virtual Fields
     field :password, :string, virtual: true
@@ -24,7 +25,11 @@ defmodule Dwblog.User do
   end
 
   defp hash_password(changeset) do
-    changeset
-    |> put_change(:password_digest, "some content")
+    if password = get_change(changeset, :password) do
+      changeset
+      |> put_change(:password_digest, hashpwsalt(password))
+    else
+      changeset
+    end
   end
 end
