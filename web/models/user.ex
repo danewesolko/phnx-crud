@@ -6,7 +6,8 @@ defmodule Dwblog.User do
     field :username, :string
     field :email, :string
     field :password_digest, :string
-
+    has_many :posts, Dwblog.Post
+    
     timestamps()
 
     # Virtual Fields
