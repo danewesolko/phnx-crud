@@ -4,6 +4,7 @@ defmodule Dwblog.Post do
   schema "posts" do
     field :title, :string
     field :body, :string
+    belongs_to :user, Dwblog.User
 
     timestamps()
   end
